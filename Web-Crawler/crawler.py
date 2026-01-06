@@ -1,3 +1,4 @@
+# @doc: Interaktiver Web-Crawler zum Extrahieren von Artikeln von Websites.
 import os
 import json
 import webbrowser
