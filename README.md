@@ -1,11 +1,13 @@
-# 🖥️ OPS-Systems | OPS-Samurai
+# 🐍 Python-Tools | OPS-Samurai
 
-Zentrale Plattform für System-Konfigurationen, Aliase und Betriebssystem-Optimierungen.
-
-## 📂 Struktur
-* [🐧 Linux-Core](./Linux-Core/) - Dotfiles, Aliase und Bash-Funktionen.
-* [🪟 Windows-Core](./Windows-Core/) - PowerShell-Profile und System-Anpassungen.
-* [🔄 Setup](./Setup/) - Skripte zur Synchronisation der Umgebung.
+Sammlung von Python-basierten Security- und Automatisierungswerkzeugen für das System-Management.
 
 ---
-*Created by OPS-Samurai*
+
+## 📂 Struktur & Tools
+* **[Automation-Helpers](./Automation-Helpers/)**: Skripte zur Systempflege und Integration (z.B. Git-Export zu YAML).
+* **[Network-Scanner](./Network-Scanner/)**: Tools zur Netzwerkanalyse (netscan).
+* **[Web-Crawler](./Web-Crawler/)**: Skripte zur Informationsbeschaffung (OSINT).
+
+---
+
