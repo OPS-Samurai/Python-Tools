@@ -1,12 +1,11 @@
-# 🐍 Python-Tools | OPS-Samurai
+# 🖥️ OPS-Systems | OPS-Samurai
 
-Zentrale Sammlung meiner Python-Entwicklungen für Automatisierung und Cybersecurity.
+Zentrale Plattform für System-Konfigurationen, Aliase und Betriebssystem-Optimierungen.
 
-## 📂 Module
-
-* [🚀 Web-Crawler](./Web-Crawler/) - Automatisierte Datenextraktion & Crawling-Logik.
-* [📡 Network-Scanner](./Network-Scanner/) - Tools für Netzwerkanalyse.
-* [🛠️ Automation-Helpers](./Automation-Helpers/) - Skripte zur täglichen System-Optimierung.
+## 📂 Struktur
+* [🐧 Linux-Core](./Linux-Core/) - Dotfiles, Aliase und Bash-Funktionen.
+* [🪟 Windows-Core](./Windows-Core/) - PowerShell-Profile und System-Anpassungen.
+* [🔄 Setup](./Setup/) - Skripte zur Synchronisation der Umgebung.
 
 ---
-*Created by OPS-Samurai - Senior System Administrator*
+*Created by OPS-Samurai*
