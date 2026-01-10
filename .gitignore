@@ -1,4 +1,4 @@
-# Python Virtual Environments
+﻿# Python Virtual Environments
 .venv/
 venv/
 ENV/
@@ -7,7 +7,23 @@ python/.venv/
 # Python Cache
 __pycache__/
 *.py[cod]
-
 # OS Dateien
 Thumbs.db
 .DS_Store
+# --- JARVIS SECURITY & AUTO-GEN ---
+GEMINI_TASK.txt
+*.log
+*.tmp
+*.bak
+# --- CREDENTIALS & SECRETS (BLOCKLIST) ---
+*.env
+secrets.json
+*.pem
+*.key
+id_rsa
+id_rsa.pub
+_keys/
+# --- IDE & OS ---
+.vscode/
+.idea/
+*.pyc

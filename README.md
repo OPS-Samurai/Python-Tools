@@ -1,47 +1,65 @@
-# Python-Tools
+# 🔧 Python-Tools
 
-Dieses Repository beherbergt eine Sammlung von Python-Skripten, die für diverse Automatisierungs- und Sicherheitsaufgaben konzipiert wurden. Die Tools umfassen Funktionen zum Exportieren von Git-Repository-Informationen, Netzwerk-Scans sowie Web-Crawling zur Extraktion von Artikeldaten.
+### Executive Summary
 
-## Installation
+This repository hosts a collection of Python scripts designed for various automation and security tasks. The tools encompass functionalities for exporting Git repository information, network scanning, and web crawling for article data extraction. All documentation adheres to ISO/IEC 26514 compliant standards.
 
-Um die Skripte in diesem Repository nutzen zu können, müssen die erforderlichen Python-Abhängigkeiten installiert werden. Es wird dringend empfohlen, eine virtuelle Umgebung zu verwenden.
+### Installation/Setup
 
-1.  **Virtuelle Umgebung erstellen und aktivieren (Optional, aber empfohlen):**
+To utilize the scripts in this repository, the necessary Python dependencies must be installed. It is highly recommended to use a virtual environment.
+
+1.  **Create and Activate Virtual Environment (Optional, but Recommended):**
 
     ```bash
     python -m venv venv
-    # Auf Windows:
+    # On Windows:
     .\venv\Scripts\activate
-    # Auf Linux/macOS:
+    # On Linux/macOS:
     . venv/bin/activate
     ```
 
-2.  **Abhängigkeiten installieren:**
+2.  **Install Dependencies:**
 
-    Navigieren Sie in das entsprechende Unterverzeichnis und installieren Sie die dort gelisteten Abhängigkeiten. Für den Web-Crawler:
+    Navigate into the respective subdirectory and install the listed dependencies. For the Web-Crawler:
 
     ```bash
     cd Web-Crawler
     pip install -r requirements.txt
     ```
 
-    Für `Automation-Helpers/GitExporttoyaml.py` könnte `PyYAML` erforderlich sein, falls nicht bereits global installiert:
+    For `Automation-Helpers/GitExporttoyaml.py`, `PyYAML` might be required if not already globally installed:
 
     ```bash
     pip install PyYAML
     ```
 
-## Skripte & Funktionen
+### Usage
 
-| Dateiname                               | Funktion                                            | Beschreibung                                                                                                                                                             |
-| :-------------------------------------- | :-------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Automation-Helpers/GitExporttoyaml.py` | Git-Informationen nach YAML exportieren             | Sammelt detaillierte Informationen (wie aktuellen Branch und Remote-URL) von Git-Repositories und exportiert diese strukturiert in eine YAML-Datei.                     |
-| `Network-Scanner/netscan.py`            | Einfacher TCP Port-Scanner                          | Ein schlanker Python-basierter Port-Scanner, der verwendet wird, um offene TCP-Ports auf einem angegebenen Zielhost zu identifizieren.                                  |
-| `Web-Crawler/ArticleFetcher.py`         | Artikel-Fetcher für Web-Crawler                     | Eine Klasse, die für das Abrufen von Webseiteninhalten und das Parsen spezifischer Daten (z.B. Titel, Marke, Preis) mittels definierter Selektoren zuständig ist. |
-| `Web-Crawler/CrawledArticle.py`         | Datenmodell für gecrawlte Artikel                   | Definiert eine `dataclass` zur standardisierten Speicherung von extrahierten Artikelinformationen wie Titel, Marke, Preis, Bild-URL und Artikel-URL.                 |
-| `Web-Crawler/crawler.py`                | Interaktiver Web-Crawler                            | Ein umfassender Web-Crawler, der Webseiten interaktiv durchsucht, Artikelinformationen extrahiert und diese in einem generierten HTML-Bericht zusammenfasst.            |
+#### Automation-Helpers
 
-## Ordnerstruktur
+*   `GitExporttoyaml.py`: Gathers detailed information (such as current branch and remote URL) from Git repositories and exports it structurally to a YAML file.
+
+#### Network-Scanner
+
+*   `netscan.py`: A lean, Python-based port scanner used to identify open TCP ports on a specified target host.
+
+#### Web-Crawler
+
+*   `ArticleFetcher.py`: A class responsible for fetching web page content and parsing specific data (z.B. Titel, Marke, Preis) using defined selectors.
+*   `CrawledArticle.py`: Defines a `dataclass` for standardized storage of extracted article information such as title, brand, price, image URL, and article URL.
+*   `crawler.py`: A comprehensive web crawler that interactively searches websites, extracts article information, and summarizes it in a generated HTML report.
+
+### Inventory
+
+| File                                | Description                                                                                                                                                                                                       |
+| :---------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Automation-Helpers/GitExporttoyaml.py` | Collects Git repository information (branch, remote) and exports it to a YAML file.                                                                                                                                 |
+| `Network-Scanner/netscan.py`        | Simple TCP Port Scanner (Python). Usage: `netscan.py <IP>`                                                                                                                                                          |
+| `Web-Crawler/ArticleFetcher.py`     | Class for fetching web content and extracting articles. Includes error logging.                                                                                                                                     |
+| `Web-Crawler/CrawledArticle.py`     | Dataclass to store crawled article data (title, brand, price, image, url).                                                                                                                                        |
+| `Web-Crawler/crawler.py`            | Interactive web crawler for extracting articles from websites, generating HTML reports.                                                                                                                             |
+
+### Ordnerstruktur
 
 ```
 .
@@ -62,3 +80,6 @@ Um die Skripte in diesem Repository nutzen zu können, müssen die erforderliche
 ├── README.md
 └── .git
 ```
+
+---
+All systems are managed under ISO/IEC 26514 compliant documentation standards.
