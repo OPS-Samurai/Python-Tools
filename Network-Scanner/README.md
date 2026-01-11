@@ -1,28 +1,38 @@
-# 💻 netscan Control Module
+# 💻 Netscan Control Module
+> This module provides a simple TCP port scanner functionality written in Python.
+
 ## 🛠️ Prerequisites
-This script requires a Python 3 environment.
+- Python 3.x
+- Standard Python libraries (`socket`, `sys`, `datetime`). No additional installations are required.
 
 ## ⚙️ Technical Details
-The `netscan` control module implements a basic TCP port scanner. It is designed to scan a specified target (IP address or hostname) for a predefined list of common open TCP ports.
-
-**Core Functionality:**
-*   **Hostname Resolution:** Utilizes `socket.gethostbyname` to resolve a given hostname into its corresponding IPv4 address.
-*   **Port Scanning:** Iterates through a fixed set of "Big 10" ports: 21 (FTP), 22 (SSH), 23 (Telnet), 25 (SMTP), 53 (DNS), 80 (HTTP), 110 (POP3), 139 (NetBIOS Session Service), 443 (HTTPS), 445 (SMB), 3389 (RDP), and 8080 (HTTP Proxy/Alternate HTTP).
-*   **Socket Management:** Employs `socket.socket(socket.AF_INET, socket.SOCK_STREAM)` to create IPv4 TCP sockets for connection attempts.
-*   **Connection Timeout:** Sets a default socket timeout of 0.5 seconds for quick scan results.
-*   **Port Status Check:** Uses `s.connect_ex((target_ip, port))` to attempt a connection, where a return value of 0 indicates an open port.
-*   **Service Identification:** Attempts to identify the service running on an open port using `socket.getservbyport`.
-*   **Error Handling:** Includes basic error handling for hostname resolution failures, user-initiated cancellations (`KeyboardInterrupt`), and general socket errors (e.g., no connection to server).
+The `netscan.py` script implements a basic TCP port scanner. It leverages Python's `socket` module to perform network operations.
+- **Hostname Resolution**: The script first attempts to resolve the provided target hostname to an IPv4 address using `socket.gethostbyname()`. If resolution fails, an error is reported, and the scan is aborted.
+- **Port Scanning**: It iterates through a predefined list of common ports (21, 22, 23, 25, 53, 80, 110, 139, 443, 445, 3389, 8080). For each port:
+    - A new `AF_INET` (IPv4) `SOCK_STREAM` (TCP) socket is created.
+    - A default timeout of 0.5 seconds is set using `socket.setdefaulttimeout()`.
+    - `s.connect_ex()` is used to attempt a connection. A return value of 0 indicates a successful (open) connection.
+    - If a port is open, the script attempts to identify the associated service using `socket.getservbyport()`.
+    - The socket is closed after each port check.
+- **Error Handling**: The script includes basic error handling for:
+    - `socket.gaierror`: Hostname resolution failures.
+    - `KeyboardInterrupt`: User abortion of the scan.
+    - `socket.error`: General network connection issues.
 
 ## 🚀 Usage Protocols
-To use the `netscan` module, execute it from the command line, providing a target IP address or hostname as an argument.
+The script is executed from the command line and requires one argument: the target IP address or hostname to scan.
 
-**Command Line Interface (CLI):**
-`python netscan.py <IP-Adresse oder Hostname>`
+**Syntax:**
+```bash
+python netscan.py <IP-Adresse oder Hostname>
+```
 
 **Example:**
-To scan the host `example.com`:
-`python netscan.py example.com`
-
-To scan the IP address `192.168.1.1`:
-`python netscan.py 192.168.1.1`
+To scan a target with the IP address `192.168.1.1`:
+```bash
+python netscan.py 192.168.1.1
+```
+To scan a target with the hostname `example.com`:
+```bash
+python netscan.py example.com
+```
