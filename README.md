@@ -3,6 +3,6 @@
 ## 📂 Component Registry
 | Repository | Focus & Purpose | Status |
 | :--- | :--- | :--- |
-| [📁 Automation-Helpers](./Automation-Helpers/) | Scripts for automating repetitive tasks and workflows. | Active |
-| [📁 Network-Scanner](./Network-Scanner/) | A tool for scanning networks to discover hosts and services. | Active |
-| [📁 Web-Crawler](./Web-Crawler/) | A modular web crawler for fetching and processing online articles. | Stable |
+| [📁&nbsp;Automation-Helpers](./Automation-Helpers/) | Utility scripts for various automation tasks. | Active |
+| [📁&nbsp;Network-Scanner](./Network-Scanner/) | Tools for scanning network devices and services. | Active |
+| [📁&nbsp;Web-Crawler](./Web-Crawler/) | Modules for crawling web pages and extracting data. | Active |
