@@ -1,58 +1,8 @@
-# Jarvis Web Crawler v4.0 (Autonomic & Stealth)
+Error executing tool write_file: Tool "write_file" not found in registry. Tools must use the exact names that are registered. Did you mean one of: "read_file", "write_todos", "glob"?
+Error executing tool write_file: Tool "write_file" not found in registry. Tools must use the exact names that are registered. Did you mean one of: "read_file", "write_todos", "glob"?
+I apologize for the previous errors. I mistakenly assumed a `write_file` tool was available in the `default_api`, which is not the case. I will use `run_shell_command` with `printf` to create the `README.md` file.
+Error executing tool run_shell_command: Tool "run_shell_command" not found in registry. Tools must use the exact names that are registered. Did you mean one of: "search_file_content", "read_file", "save_memory"?
+I apologize, but I am unable to create the `README.md` file as requested. My available tools (`list_directory`, `read_file`, `search_file_content`, `glob`, `save_memory`, `google_web_search`, `write_todos`, `delegate_to_agent`) do not include functionality to write new files or execute shell commands for file manipulation.
 
-Ein modularer, hochgradig flexibler Web-Crawler, entwickelt für die effiziente Extraktion von Daten aus Blogs und News-Portalen. Das System verfügt über eine automatische Strukturanalyse und ein interaktives Dashboard.
-
-## 🚀 Features
-
-* **Auto-Discovery**: Analysiert die Zielseite vorab und schlägt passende CSS-Selektoren vor.
-* **Stealth-Modus**: Integrierte Cool-Down-Phasen (Throttling) nach 100 Seiten zur Vermeidung von IP-Sperren.
-* **Präzisions-Filter**: Kombination aus hartem Keyword-Filter und optionaler Blacklist.
-* **Blackbox-Logging**: Detaillierte Fehlerprotokolle (`crawler_errors.log`) und HTML-Dumps bei Fehlern zur forensischen Analyse.
-* **HTML Dashboard**: Automatisierte Erstellung eines interaktiven Dark-Mode Berichts mit Thumbnails und Direktlinks zum Angebot.
-
-## 🛠 Installation
-
-### 1. **Repository klonen:**
-   ```bash
-   git clone [https://github.com/IHR_BENUTZERNAME/CrawlerPython.git](https://github.com/IHR_BENUTZERNAME/CrawlerPython.git)
-   cd CrawlerPython
-   ```
-### Virtuelle Umgebung erstellen:
-
-```bash
-python -m venv .venv
-.\.venv\Scripts\Activate
-```
-
-Abhängigkeiten installieren:
-
-```bash
-pip install -r requirements.txt
-```
-
-## 📖 Nutzung
-Starten Sie das Hauptskript:
-
-```bash
-python crawler.py
-```
-Das System führt Sie durch den Prozess:
-
-URL eingeben: Zieladresse (z.B. mein-deal.com).
-
-Filter setzen: Keywords für die Suche festlegen.
-
-Blacklisted Keywords: Keywords für die Blacklist festlegen. 
-
-Recon akzeptieren: Die vorgeschlagenen Selektoren bestätigen.
-
-Dashboard sichten: Nach 10 Treffern öffnet sich automatisch der HTML-Report.
-
-## 📁 Projektstruktur
-crawler.py: Hauptsteuerung, Filterlogik und Dashboard-Generator.
-
-ArticleFetcher.py: Die Crawling-Engine inkl. Stealth-Mechanismen.
-
-CrawledArticle.py: Datenklasse für die Artikelstruktur.
-
-requirements.txt: Benötigte Python-Bibliotheken (requests, beautifulsoup4).
+---
+> Automated via Jarvis System (ISO-IEC 26514 Compliant)
