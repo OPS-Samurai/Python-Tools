@@ -1,25 +1,71 @@
-# Automation-Helpers Module
+## 1. Overview
 
-## Overview
-GitExporttoyaml.py is a Python script designed to extract and export system configuration information from a Git repository. This script provides valuable insights into the current state of your repositories, including branch names, remote URLs, and more.
+**`GitExporttoyaml.py`** is a Python automation script designed to scan a specified directory for Git repositories and generate a system profile in YAML format. This profile, referred to as the "System-DNA," serves as a manifest of the development environment.
 
-## Usage
-To use this script, simply run it from the command line or within your favorite IDE. The script will scan the specified directory (default: `C:\\Git`) for all subdirectories that are Git repositories. For each repository found, it will extract the current branch name and remote URL, then write this information to a YAML file.
+The script systematically iterates through subdirectories of a defined base path, identifies Git repositories, and extracts key metadata for each, including the repository's name, local path, remote URL, and the currently active branch.
 
-## Features
-* Scans a specified directory for Git repositories
-* Extracts branch names and remote URLs from each repository
-* Writes system configuration information to a YAML file
+This information is aggregated along with system-level context—such as a system identifier, export timestamp, and environment details—and then exported to a structured YAML file. The resulting `system_profile.yaml` provides a clear and version-controllable snapshot of the workspace configuration.
 
-## System Requirements
-* Python 3.8 or later
-* Git installed on the system (for repository scanning)
+## 2. Prerequisites
 
-## Output File
-The script will generate an output file named `OPS-Systems/system_profile.yaml` in the specified directory (`C:\\Git`). This file contains the extracted system configuration information in YAML format.
+### 2.1. Software Requirements
 
-## History
-This script was written to help streamline system administration tasks and provide valuable insights into Git repository configurations. Future updates may include additional features or improvements based on user feedback.
+-   **Python 3.6+:** The script is written in Python and requires a compatible interpreter.
+-   **Git:** The Git command-line interface (CLI) must be installed and accessible in the system's `PATH`. The script relies on `git` commands to introspect repository details.
+-   **PyYAML Library:** The script uses the `PyYAML` library to serialize data into YAML format. It can be installed via pip:
+    ```bash
+    pip install pyyaml
+    ```
 
----
-> All systems are managed under ISO/IEC 26514 compliant documentation standards via Local AI.
+### 2.2. Environment Configuration
+
+-   **Directory Structure:** The script expects a specific directory structure. The `base_path` variable is hardcoded to `C:\Git` and the output directory for the YAML file is hardcoded to `C:\Git\OPS-Systems\`. Ensure these paths exist or modify the script variables to match your environment.
+
+## 3. Usage
+
+### 3.1. Execution
+
+To execute the script, navigate to its location in a terminal and run it using the Python interpreter:
+
+```bash
+python GitExporttoyaml.py
+```
+
+Upon successful execution, the script will print a confirmation message to the console, indicating the path of the exported YAML file:
+
+```
+✅ System-DNA erfolgreich nach C:\Git\OPS-Systems\system_profile.yaml exportiert.
+```
+
+### 3.2. Configuration
+
+The script's behavior can be customized by modifying the following variables at the beginning of the file:
+
+-   `base_path`: Defines the root directory to be scanned for Git repositories.
+    -   **Default:** `"C:\\Git"`
+-   `export_file`: Defines the full path, including the filename, for the output YAML file.
+    -   **Default:** `os.path.join(base_path, "OPS-Systems", "system_profile.yaml")`
+
+### 3.3. Output File
+
+The script generates a YAML file (`system_profile.yaml`) with the following structure:
+
+```yaml
+system_identity: Jarvis-Core / OPS-Samurai
+export_date: '2023-10-27 10:00:00'
+environment:
+  workspace_root: C:\Git
+  powershell_profile: C:\Git\OPS-Systems\Windows-Core\profile.ps1
+  os_compatibility:
+  - PowerShell 5.1
+  - PowerShell 7.5.4
+repositories:
+- name: MyFirstRepo
+  path: C:\Git\MyFirstRepo
+  remote: https://github.com/user/myfirstrepo.git
+  active_branch: main
+- name: AnotherProject
+  path: C:\Git\AnotherProject
+  remote: https://github.com/user/anotherproject.git
+  active_branch: develop
+```

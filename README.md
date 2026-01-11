@@ -1,12 +1,5 @@
-# Python-Tools Architecture
-
-Specialized Python-based automation tools and data extraction helpers.
-
 | Repository | Focus & Purpose | Status |
-| :--- | :--- | :--- |
-| [**Automation-Helpers**](./Automation-Helpers/) | Automated module. | Active |
-| [**Network-Scanner**](./Network-Scanner/) | python netscan.py <IP-Adresse oder Hostname> | Active |
-| [**Web-Crawler**](./Web-Crawler/) | All systems are managed under ISO/IEC 26514 compliant documentation standards via Local AI. | Active |
-
----
-> All systems are managed under ISO/IEC 26514 compliant documentation standards via Local AI.
+|---|---|---|
+| Automation-Helpers | Python script for scanning Git repositories and generating a system profile (System-DNA) in YAML format, acting as a manifest of the development environment. | Operational |
+| Network-Scanner | Command-line utility for network diagnostics, functioning as a lightweight TCP port scanner to identify open ports on a given host. | Operational |
+| Web-Crawler | Python-based tool for targeted data extraction from websites, allowing interactive configuration to crawl, filter, and report article-like information in a live-updating HTML report. | Operational |
