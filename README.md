@@ -1,8 +1,8 @@
-# 🏗️ Python-Tools Architecture
-> This repository serves as a collection of various Python-based tools designed for different automation and utility purposes.
-## 📂 Sub-Repositories
+# 🧬 Python-Tools System Architecture
+> Overview of the system structure.
+## 📂 Component Registry
 | Repository | Focus & Purpose | Status |
 | :--- | :--- | :--- |
-| [📁 Automation-Helpers](./Automation-Helpers/) | Contains scripts and tools for general automation tasks. | Active |
-| [📁 Network-Scanner](./Network-Scanner/) | Provides a network scanning utility for discovering devices and services. | Active |
-| [📁 Web-Crawler](./Web-Crawler/) | Includes tools for crawling websites and fetching article content. | Active |
+| [📁 Automation-Helpers](./Automation-Helpers/) | Utilities for automating various tasks, including Git export to YAML. | Active |
+| [📁 Network-Scanner](./Network-Scanner/) | Tools for scanning networks and identifying hosts/services. | Active |
+| [📁 Web-Crawler](./Web-Crawler/) | Modules for crawling websites and fetching articles. | Active |
