@@ -1,24 +1,23 @@
 # 💻 GitExporttoyaml.py Control Module
-
 ## 🛠️ Prerequisites
-
-The module requires the following Python libraries to be available in the execution environment:
-*   **os**: For interacting with the operating system, primarily for path manipulation and directory listing.
-*   **yaml**: For serializing the collected data into the YAML format.
-*   **subprocess**: To execute external Git commands for retrieving repository information.
-*   **datetime**: To timestamp the data export.
+- Python 3.x environment
+- `PyYAML` library for YAML serialization.
+- `git` command-line interface (CLI) installed and accessible in the system's PATH.
 
 ## ⚙️ Technical Details
+The module is designed to scan a specified base directory (`C:\Git`) for Git repositories. It performs the following operations:
 
-The script is designed to catalog Git repositories within a predefined base directory (`C:\Git`).
-
-Its core function is to generate a `system_profile.yaml` file, which acts as a manifest of all located repositories. The process involves:
-1.  **Initialization**: A primary dictionary, `manifest`, is created. It is pre-populated with static metadata, including a system identity, the export timestamp, and details about the target environment.
-2.  **Repository Scanning**: The script iterates through each item in the `C:\Git` directory.
-3.  **Git Information Retrieval**: For each sub-directory, it executes `git` commands via `subprocess` to determine the current branch and the "origin" remote URL. If a directory is not a Git repository, the branch is listed as "unknown" and the remote as "none".
-4.  **Data Aggregation**: The name, full path, remote URL, and active branch of each repository are appended to the `repositories` list within the `manifest`.
-5.  **YAML Export**: The completed `manifest` dictionary is written to `C:\Git\OPS-Systems\system_profile.yaml`, overwriting any existing file.
+1.  **Git Information Retrieval**: A function `get_git_info` uses the `subprocess` module to execute `git` commands. It captures the current branch (`git branch --show-current`) and the origin remote URL (`git remote get-url origin`) for a given directory path. It includes error handling for directories that are not Git repositories.
+2.  **Manifest Generation**: It initializes a dictionary object named `manifest`. This structure is populated with static metadata, including a `system_identity`, the `export_date` (current timestamp), and `environment` details such as the workspace root.
+3.  **Repository Scanning**: The script iterates through all items in the hardcoded `base_path`. For each item that is a directory, it invokes `get_git_info` to collect repository details.
+4.  **Data Aggregation**: The details for each discovered repository—including its name, local path, remote URL, and active branch—are appended to the `repositories` list within the `manifest`.
+5.  **YAML Export**: The fully populated `manifest` dictionary is serialized into a YAML format. The output is written to a hardcoded file path: `C:\Git\OPS-Systems\system_profile.yaml`, overwriting any existing file. A confirmation message is printed to standard output upon successful export.
 
 ## 🚀 Usage Protocols
+Execute the script from a terminal using the Python interpreter. No command-line arguments are required as all paths are hardcoded within the script.
 
-Execute the Python script directly from a compatible environment. No command-line arguments are required. The script operates on a hardcoded base path and output file location. Upon successful execution, it will print a confirmation message to the console indicating the export path.
+```bash
+python GitExporttoyaml.py
+```
+
+Upon successful execution, the script will create or update the `system_profile.yaml` file and print a confirmation message.

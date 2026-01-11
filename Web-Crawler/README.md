@@ -1,74 +1,109 @@
 # 💻 ArticleFetcher Control Module
 ## 🛠️ Prerequisites
-- `time`: For handling delays and pauses during crawling.
-- `requests`: For making HTTP requests to fetch web page content.
-- `bs4` (BeautifulSoup): For parsing HTML documents and extracting data.
-- `urllib.parse`: For joining relative URLs to form absolute URLs.
-- `CrawledArticle`: Local data class for storing scraped article information.
-- `datetime`: For timestamping error logs.
+- `time`
+- `requests`
+- `bs4` (BeautifulSoup)
+- `urllib.parse`
+- `CrawledArticle` data class
+- `datetime`
 
 ## ⚙️ Technical Details
-The `ArticleFetcher` class is designed to scrape articles from a paginated website.
+The `ArticleFetcher` class is designed to scrape article data from web pages. It systematically navigates through paginated sites, extracts specified data points for each article, and handles potential errors during the process.
 
-- **Error Logging**: The `log_error` method records any exceptions encountered during the fetching process into a file named `crawler_errors.log`, complete with a timestamp.
-- **Fetching Process**: The core logic resides in the `fetch` generator method. It sequentially navigates through pages using a "next button" selector.
-  - It simulates a browser user agent (`Mozilla/5.0`) in the request headers.
-  - To prevent overloading the server, it pauses for 1.5 seconds between requests and implements a 3-minute pause after every 100 pages accessed.
-  - It uses `requests.get` with a 15-second timeout and checks for HTTP errors via `raise_for_status()`.
-- **Data Extraction**: For each page, `BeautifulSoup` parses the HTML. The method then:
-  - Selects article containers based on the provided `container` selector.
-  - Extracts the title, price, brand, article URL, and image URL using corresponding CSS selectors. If a specific element like brand or price is not found, it assigns a default value of "N/A".
-  - Yields a `CrawledArticle` object for each successfully parsed article.
-- **Pagination**: The crawler continues to the next page by finding an element matching the `next_btn` selector and extracting its `href` attribute. The process stops if no "next" button is found or if no articles are found on the current page.
+- **Error Logging**: The `log_error` method records any exceptions encountered during fetching into a `crawler_errors.log` file, timestamping each entry for debugging purposes.
+- **Data Fetching**: The `fetch` method is a generator that iterates through website pages.
+    - It sends HTTP GET requests with a `User-Agent` header to mimic a standard web browser.
+    - To prevent server overload, it pauses for 1.5 seconds between requests and implements a longer 3-minute pause every 100 pages.
+    - It uses `BeautifulSoup` to parse the HTML content and CSS selectors provided in a `selectors` dictionary to find the article container, title, price, brand, image, and link.
+    - For each article found, it yields a `CrawledArticle` object populated with the extracted data.
+    - It identifies the "next page" button using a selector to continue the crawling process until no more pages are found.
+- **URL Handling**: It uses `urljoin` to correctly construct absolute URLs from relative paths found in links and image sources.
 
 ## 🚀 Usage Protocols
-The `ArticleFetcher` is intended to be used by an orchestrator script. To use it, create an instance of the class. Then, call the `fetch(url, selectors)` method, providing the initial target URL and a dictionary of CSS selectors. Iterate over the returned generator to process each `CrawledArticle` object as it is scraped.
+The `ArticleFetcher` is not a standalone script. It must be imported and utilized by a primary control script.
+
+1.  Instantiate the class: `fetcher = ArticleFetcher()`
+2.  Call the `fetch` method, providing a starting URL and a dictionary of CSS selectors.
+3.  Iterate over the returned generator to process each `CrawledArticle` object as it is yielded.
+
+*Example Selectors Dictionary:*
+```python
+selectors = {
+    'container': 'article',
+    'title': 'h2.product-title a',
+    'image': 'img.product-image',
+    'next_btn': 'a.pagination-next'
+}
+```
 
 ---
 
 # 💻 CrawledArticle Control Module
 ## 🛠️ Prerequisites
-- `dataclasses`: Standard Python module for creating structured data classes.
+- `dataclasses` module
 
 ## ⚙️ Technical Details
-`CrawledArticle` is a data class that serves as a standardized container for information scraped from a website. It defines the structure for a single article, ensuring data consistency. The class attributes are:
-- `title` (str)
-- `brand` (str)
-- `price` (str)
-- `image` (str)
-- `url` (str)
+`CrawledArticle` is a data class that serves as a structured container for information scraped from a website. It provides a standardized format for holding article details, ensuring data consistency throughout the crawling and reporting process.
 
-It also includes a `to_dict()` method, which converts an instance of the class into a key-value dictionary format.
+The class defines the following attributes:
+- `title` (str): The name or title of the article.
+- `brand` (str): The brand or manufacturer of the article.
+- `price` (str): The price of the article.
+- `image` (str): The URL of the article's image.
+- `url` (str): The direct URL to the article's page.
+
+It also includes a `to_dict` method, which converts an instance of the class into a key-value dictionary format.
 
 ## 🚀 Usage Protocols
-This class is not executed directly. It is imported and instantiated by other modules (`ArticleFetcher`, `crawler.py`) to hold the extracted data for each article. An instance is created by passing the title, brand, price, image, and URL as arguments during its initialization.
+This class is primarily used as a data structure. An instance of `CrawledArticle` is created to represent a single scraped item. It is instantiated by providing values for the title, brand, price, image, and URL.
+
+*Example Instantiation:*
+```python
+article = CrawledArticle(
+    title="Product Example",
+    brand="ExampleBrand",
+    price="$99.99",
+    image="https://example.com/image.jpg",
+    url="https://example.com/product"
+)
+```
 
 ---
 
-# 💻 Crawler Control Module
+# 💻 Web Crawler Control Module
 ## 🛠️ Prerequisites
-- `os`: For handling file paths.
-- `webbrowser`: For automatically opening the HTML report in the user's default browser.
-- `winsound`: For playing system sounds as notifications (Windows-specific).
-- `datetime`: For timestamping the generated report.
-- `ArticleFetcher`: Local module for performing the web scraping.
+- `os`
+- `json`
+- `webbrowser`
+- `winsound`
+- `datetime`
+- `ArticleFetcher` class
 
 ## ⚙️ Technical Details
-This script is the main entry point for the web crawling application.
+This script provides an interactive command-line interface for crawling websites to extract article data. It orchestrates the fetching, filtering, and reporting of results.
 
-- **HTML Report Generation**: The `generate_html_report` function dynamically creates an HTML file from a list of `CrawledArticle` objects. The report is styled with CSS for readability and includes a meta refresh tag to reload every 60 seconds, providing a live view of the results.
-- **Interactive Configuration**: The `main` function initiates an interactive command-line session to configure the crawl:
-  - It prompts the user for a target URL, an optional filtering keyword, and an optional comma-separated blacklist of terms.
-  - It presents a default set of CSS selectors and allows the user to override them if needed.
-- **Crawling and Filtering**:
-  - An `ArticleFetcher` instance is created to perform the scraping.
-  - For each article found, the script combines the title and brand into a single string for text matching.
-  - It first applies the hard keyword filter (if provided).
-  - It then checks the article against the blacklist. An article is excluded if any blacklisted word is found in its text.
-- **Live Monitoring**:
-  - As results are collected, the script updates the HTML report every 5 articles.
-  - On the first update (at 5 results), it automatically opens the report file in a web browser.
-- **Completion**: The process can be terminated manually by the user (`KeyboardInterrupt`). Upon completion or interruption, a final report is generated, opened in the browser, and a notification sound is played.
+- **HTML Report Generation**: The `generate_html_report` function creates a self-contained HTML file to display the crawled data.
+    - The report is styled with a dark theme and includes columns for the product image, brand, title (with a hyperlink), and price.
+    - It features a meta refresh tag to automatically reload the page every 60 seconds, allowing for live monitoring of results.
+    - The generated file is named based on the filter keyword used for the session.
+- **Main Execution Logic**: The `main` function controls the user interaction and crawling process.
+    - It prompts the user to input a target URL, an optional keyword filter, and an optional comma-separated blacklist of terms.
+    - It allows the user to review and override the default CSS selectors (`container`, `title`, `next_btn`, `image`) for the target site.
+    - It instantiates the `ArticleFetcher` and begins the crawl.
+    - For each article found, it checks if it matches the keyword filter and is not present in the blacklist.
+    - Matching articles are added to a results list, and the HTML report is updated every 5 articles.
+    - The script automatically opens the report file in the default web browser on the first update.
+    - The process can be terminated manually by the user with `Ctrl+C`.
+- **User Feedback**: The script provides real-time feedback in the console, indicating the current page being scanned and notifying when new articles are found. Upon successful completion, it plays a sound notification.
 
 ## 🚀 Usage Protocols
-Execute the script from the command line. Follow the interactive prompts to specify the target URL and filtering criteria. The crawler will then run, and a live HTML report will be opened in your web browser.
+The script is designed to be executed directly from a terminal.
+
+1.  Run the script: `python crawler.py`
+2.  Follow the interactive prompts:
+    - **Target-URL**: Enter the full URL of the website to crawl. Pressing Enter defaults to "https://www.mein-deal.com".
+    - **Filter Keyword**: Enter a keyword to only save articles matching this term. Pressing Enter disables the filter.
+    - **Blacklist**: Enter comma-separated terms to exclude from results.
+    - **Selector Configuration**: Acknowledge the default CSS selectors or choose to customize them for the target website.
+3.  The crawl begins, and a live HTML report will open in a web browser once the first set of results is found.
+4.  The process concludes when the crawler can no longer find a "next page" button or is manually stopped. A final report is generated.
