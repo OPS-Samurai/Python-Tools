@@ -1,40 +1,13 @@
-Error executing tool write_file: Tool "write_file" not found in registry. Tools must use the exact names that are registered. Did you mean one of: "read_file", "write_todos", "glob"?
-Error executing tool write_file: Tool "write_file" not found in registry. Tools must use the exact names that are registered. Did you mean one of: "read_file", "write_todos", "glob"?
-Error executing tool run_shell_command: Tool "run_shell_command" not found in registry. Tools must use the exact names that are registered. Did you mean one of: "search_file_content", "read_file", "save_memory"?
-I am unable to directly create or modify files in the file system, as I do not have a `write_file` or `run_shell_command` tool available in my current environment. My available tools are `list_directory`, `read_file`, `search_file_content`, `glob`, `save_memory`, `google_web_search`, `write_todos`, and `delegate_to_agent`.
-
-I can provide the content for the `README.md` for the `Network-Scanner` module as a text output, but I cannot write it to the file system.
-
-Here is the content for the `README.md`:
-
-```markdown
-# Network-Scanner Automation
-> This module contains a simple TCP port scanner written in Python.
-
-## Included Scripts
-| File | Description |
-| :--- | :--- |
-| `netscan.py` | A basic TCP port scanner that checks for open ports on a given target IP address or hostname. |
-
-## Usage
-To use the `netscan.py` script, provide an IP address or hostname as an argument.
-
-```bash
-python netscan.py <IP-Address or Hostname>
-```
-
-**Example:**
-```bash
-python netscan.py 192.168.1.1
-```
-or
-```bash
-python netscan.py example.com
-```
-
----
-*Module Version: Automated Build (Jarvis ISO Protocol)*
-```
+API returned invalid content after all retries. Full report available at: C:\Users\NGonc\AppData\Local\Temp\gemini-client-error-generateJson-invalid-content-2026-01-11T02-47-58-371Z.json
+[Routing] ClassifierStrategy failed: Error: Failed to generate content: Retry attempts exhausted
+    at BaseLlmClient._generateWithRetry (file:///C:/Users/NGonc/AppData/Roaming/npm/node_modules/@google/gemini-cli/node_modules/@google/gemini-cli-core/dist/src/core/baseLlmClient.js:163:19)
+    at async BaseLlmClient.generateJson (file:///C:/Users/NGonc/AppData/Roaming/npm/node_modules/@google/gemini-cli/node_modules/@google/gemini-cli-core/dist/src/core/baseLlmClient.js:44:24)
+    at async ClassifierStrategy.route (file:///C:/Users/NGonc/AppData/Roaming/npm/node_modules/@google/gemini-cli/node_modules/@google/gemini-cli-core/dist/src/routing/strategies/classifierStrategy.js:126:34)
+    at async CompositeStrategy.route (file:///C:/Users/NGonc/AppData/Roaming/npm/node_modules/@google/gemini-cli/node_modules/@google/gemini-cli-core/dist/src/routing/strategies/compositeStrategy.js:30:34)
+    at async ModelRouterService.route (file:///C:/Users/NGonc/AppData/Roaming/npm/node_modules/@google/gemini-cli/node_modules/@google/gemini-cli-core/dist/src/routing/modelRouterService.js:43:24)
+    at async GeminiClient.sendMessageStream (file:///C:/Users/NGonc/AppData/Roaming/npm/node_modules/@google/gemini-cli/node_modules/@google/gemini-cli-core/dist/src/core/client.js:394:30)
+    at async file:///C:/Users/NGonc/AppData/Roaming/npm/node_modules/@google/gemini-cli/dist/src/nonInteractiveCli.js:192:34
+    at async main (file:///C:/Users/NGonc/AppData/Roaming/npm/node_modules/@google/gemini-cli/dist/src/gemini.js:434:9)
 
 ---
 > All systems are managed under ISO/IEC 26514 compliant documentation standards.
