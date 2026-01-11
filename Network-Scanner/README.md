@@ -1,54 +1,29 @@
-## 1. Overview
+# 📝 Network Scanner Script
+## 🛠️ Prerequisites
+This script requires Python 3 to run. It utilizes standard Python libraries (`socket`, `sys`, `datetime`) which are included with a standard Python installation.
+## ⚙️ Technical Details
+The `netscan.py` script implements a basic TCP port scanner. It defines a `scan_target` function that takes a target (IP address or hostname) as an argument.
 
-This document describes the `netscan.py` utility, a command-line tool for network diagnostics. It is a lightweight and efficient TCP port scanner designed to determine which of the most common ports are open on a given network host.
+Key functionalities include:
+- **Hostname Resolution**: Attempts to resolve the provided target hostname to an IP address using `socket.gethostbyname()`.
+- **Port Scanning**: Iterates through a predefined list of common TCP ports (21, 22, 23, 25, 53, 80, 110, 139, 443, 445, 3389, 8080).
+- **Socket Connection**: For each port, it creates an IPv4 TCP socket (`socket.AF_INET`, `socket.SOCK_STREAM`) and sets a default timeout of 0.5 seconds.
+- **Connection Check**: Uses `s.connect_ex()` to attempt a connection, returning 0 on success (port open) or an error code otherwise.
+- **Service Identification**: For open ports, it attempts to identify the service using `socket.getservbyport()`.
+- **Error Handling**: Includes exception handling for `socket.gaierror` (hostname resolution failure), `KeyboardInterrupt` (user abortion), and `socket.error` (general connection issues).
+- **Output**: Provides formatted output indicating the target, start time, and status of each scanned port (OPEN/CLOSED) along with the service name if identified.
+## 🚀 Usage (Examples)
+To use the script, provide a target IP address or hostname as a command-line argument.
 
-The script performs the following key functions:
--   Resolves a target hostname to its corresponding IPv4 address.
--   Scans a predefined list of commonly used TCP ports: 21, 22, 23, 25, 53, 80, 110, 139, 443, 445, 3389, and 8080.
--   Reports the status of each open port and attempts to identify the associated service (e.g., HTTP, FTP, SSH).
--   Provides clear start and end timestamps for the scanning operation.
-
-This tool is intended for network administrators and security professionals for basic network reconnaissance and service verification.
-
-## 2. Prerequisites
-
-To run the `netscan.py` script, the following requirements must be met:
-
--   **Python:** Python 3.x must be installed on the system.
--   **Standard Libraries:** The script relies solely on standard Python libraries (`socket`, `sys`, `datetime`) and requires no external packages to be installed.
--   **Network Access:** The host machine must have network connectivity to the target system. Firewalls or other network security measures may block the scan and affect the results.
-
-## 3. Usage
-
-The script is executed from the command line.
-
-### Syntax
-
-```sh
-python netscan.py <target>
+```bash
+python netscan.py <IP-Adresse oder Hostname>
 ```
 
--   `<target>`: The IP address or fully qualified hostname of the system you wish to scan.
-
-### Example
-
-To scan the host `example.com`, use the following command:
-
-```sh
+**Example:**
+```bash
+python netscan.py 192.168.1.1
+```
+or
+```bash
 python netscan.py example.com
-```
-
-### Output
-
-The script will produce output similar to the following, listing any open ports it discovers within its predefined list.
-
-```
---------------------------------------------------
-🎯 Ziel: 93.184.216.34
-🕒 Start: 2026-01-11 10:30:00.123456
---------------------------------------------------
-✅ Port    80/tcp OFFEN  (http)
-✅ Port   443/tcp OFFEN  (https)
---------------------------------------------------
-🏁 Scan abgeschlossen.
 ```

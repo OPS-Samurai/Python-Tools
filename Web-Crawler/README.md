@@ -1,65 +1,149 @@
-## **ISO Documentation: Interactive Web Crawler v4.5**
+# 🏗️ Web-Crawler Architecture
+> An interactive command-line tool designed to extract article data from websites, filter it based on user-defined criteria, and generate a live HTML report.
 
-#### **1. Overview**
+## 📂 Modules
+| Module | Focus & Purpose | Status |
+| :--- | :--- | :--- |
+| [📁 crawler.py](./crawler.py) | Main executable script providing the user interface for initiating and configuring the crawl. | Active |
+| [📁 ArticleFetcher.py](./ArticleFetcher.py) | Core class responsible for handling HTTP requests, parsing HTML, and extracting article data page by page. | Active |
+| [📁 CrawledArticle.py](./CrawledArticle.py) | Data structure (dataclass) for storing the extracted information of a single article. | Stable |
 
-This document outlines the functionality and operation of the Interactive Web Crawler, a Python-based tool designed for targeted data extraction from websites.
+---
 
-The system is architected into three distinct modules:
+# 📝 crawler.py
+An interactive web crawler for extracting article information from websites. It prompts the user for a target URL, filters, and CSS selectors, then generates a live HTML report with the findings.
 
-*   **`crawler.py`**: The primary execution script and user interface. It manages user input, orchestrates the crawling process, applies filtering logic, and generates the final output report.
-*   **`ArticleFetcher.py`**: The core crawling engine. This module is responsible for handling HTTP requests, parsing HTML content using BeautifulSoup, extracting data based on CSS selectors, and navigating through paginated content. It includes error logging and mechanisms to prevent rapid, excessive requests.
-*   **`CrawledArticle.py`**: A `dataclass`-based data structure that defines the schema for a single extracted article. It standardizes the data object with fields for `title`, `brand`, `price`, `image`, and `url`.
+## 🛠️ Prerequisites
+- Python 3.x
+- `ArticleFetcher` class from `ArticleFetcher.py`
+- Standard libraries: `os`, `json`, `webbrowser`, `winsound`, `datetime`
 
-The tool's primary function is to allow a user to interactively configure and launch a web crawl on a target website. It systematically navigates through pages, extracts specified article-like information (e.g., products, deals, news), filters the results based on a keyword and a blacklist, and presents the findings in a live-updating, formatted HTML report that can be monitored in a web browser.
+## ⚙️ Technical Details
+The script operates through a `main()` function which orchestrates the crawling process.
 
-#### **2. Prerequisites**
+- **User Input**: It interactively prompts the user for:
+    - The target URL.
+    - A keyword to filter results.
+    - A comma-separated list of blacklist terms to exclude results.
+    - Confirmation or modification of the default CSS selectors used for data extraction.
 
-To operate the crawler, the following software components are required:
+- **Data Fetching**: It instantiates `ArticleFetcher` and iterates through the articles it yields from the target site.
 
-*   **Python 3.6** or higher.
-*   **Required Python Libraries:**
-    *   `requests`: For executing HTTP requests to fetch web page content.
-    *   `beautifulsoup4`: For parsing HTML and extracting data elements.
-    *   `winsound`: (Standard library, Windows-specific) Used for audio notifications upon task completion.
+- **Filtering**:
+    - **Keyword Filter**: If a keyword is provided, only articles whose title or brand contains the keyword are included.
+    - **Blacklist Filter**: Articles containing any of the blacklisted terms are excluded.
 
-These dependencies can be installed using the Python package installer, pip:
+- **Live Reporting**:
+    - The `generate_html_report()` function creates a formatted HTML file from the results.
+    - The report is updated every 5 articles found.
+    - The script automatically opens the report in a web browser on the first update and upon completion.
+
+- **Completion**: A final report is generated when the crawl finishes or is interrupted. A system beep signals the end of the process.
+
+## 🚀 Usage (Examples)
+Run the script from the command line. The script will guide you through the required inputs.
+
 ```bash
-pip install requests beautifulsoup4
+python crawler.py
 ```
 
-#### **3. Usage**
+**Example Interaction:**
+```
+--- JARVIS CRAWLER v4.5 (MANUAL OVERRIDE ENABLED) ---
+Ziel-URL (Enter für Mein-Deal.com): https://www.example-shop.com/deals
+Harter Filter (Keyword - Enter für alles): laptop
+Blacklist (Begriffe mit Komma trennen - z.B. 'Halterung, Kabel'): bag, case
 
-##### **3.1. Execution**
+--- SELEKTOREN KONFIGURATION ---
+Aktuelle Selektoren: {'container': 'article', 'title': 'h2', 'next_btn': 'a.next', 'image': 'img'}
+Selektoren anpassen? (j/n): n
 
-The application is launched by running the main script from a terminal or command prompt:
-
-```bash
-python Web-Crawler/crawler.py
+[*] Mission gestartet. Filter: laptop | Blacklist: 2 Begriffe
 ```
 
-##### **3.2. Interactive Configuration**
+---
 
-Upon execution, the script prompts the user for several configuration parameters to define the scope and target of the crawl:
+# 📝 ArticleFetcher.py
+A class designed to fetch and parse articles from a web page, handling pagination to scrape multiple pages.
 
-1.  **Target URL**: The initial URL from which the crawl will begin. If left blank, it defaults to `https://www.mein-deal.com`.
-2.  **Keyword Filter**: A case-insensitive keyword used to filter results. Only articles containing this keyword in their title or brand will be collected. If left blank, all articles are considered.
-3.  **Blacklist**: A comma-separated list of case-insensitive terms. Any article whose title or brand contains one of these terms will be excluded.
-4.  **Selector Configuration**: The user is prompted to confirm or override the default CSS selectors used for data extraction. This allows the crawler to be adapted to different website structures.
-    *   **`container`**: The selector for the parent element that encloses all data for a single article (Default: `article`).
-    *   **`title`**: The selector for the element containing the article's title (Default: `h2`).
-    *   **`next_btn`**: The selector for the anchor (`<a>`) tag that links to the next page of results (Default: `a.next`).
-    *   **`image`**: The selector for the image (`<img>`) tag associated with the article (Default: `img`).
+## 🛠️ Prerequisites
+- Python 3.x
+- `requests`
+- `beautifulsoup4`
+- `CrawledArticle` class from `CrawledArticle.py`
 
-##### **3.3. Process Monitoring**
+## ⚙️ Technical Details
+### `ArticleFetcher` Class
+- **`log_error(message)`**: Writes error messages with a timestamp to a local file named `crawler_errors.log`.
+- **`fetch(url, selectors)`**: A generator function that performs the core crawling logic.
+    - It sends an HTTP GET request to the given `url` with a standard `User-Agent` header.
+    - It paginates by finding the "next" button using the provided `next_btn` CSS selector and following its `href` attribute.
+    - To avoid rate-limiting, it pauses for 1.5 seconds between requests and for 3 minutes after every 100 pages.
+    - It uses `BeautifulSoup` to parse the HTML and extracts article data based on the provided CSS selectors for the container, title, and image.
+    - It attempts to find common selectors for price (`.price`, `.deal-price`) and brand (`.brand`, `.merchant`).
+    - For each article found, it yields a `CrawledArticle` object containing the extracted data.
+    - The process stops if no more articles are found or the "next" button is absent.
 
-*   The console displays real-time progress, indicating the current page URL being scanned.
-*   As matching articles are found and filtered, a confirmation message is printed.
-*   The system generates and updates an HTML report (`Live_Report_*.html`) for every 5 articles found.
-*   After the first 5 articles are found, the HTML report is automatically opened in the system's default web browser. This report is configured to auto-refresh every 60 seconds, providing a live dashboard of the crawl's progress.
-*   The process can be terminated gracefully at any time by pressing `CTRL+C`.
+## 🚀 Usage (Examples)
+Instantiate the class and loop through the `fetch` method to retrieve articles.
 
-##### **3.4. Outputs**
+```python
+from ArticleFetcher import ArticleFetcher
 
-1.  **HTML Report**: A file named `Live_Report_<Keyword>.html` (or `Live_Report_All.html` if no keyword is used) is created in the script's directory. This file contains a formatted table of all collected articles.
-2.  **Error Log**: If any HTTP or parsing errors occur during the crawl, they are logged with a timestamp in `crawler_errors.log`.
-3.  **Completion Notification**: Upon successful completion of the crawl, a two-tone beep is played (Windows systems only) to alert the user.
+fetcher = ArticleFetcher()
+target_url = "https://www.example-shop.com/deals"
+css_selectors = {
+    "container": ".product-card",
+    "title": ".product-title",
+    "next_btn": "a.pagination-next",
+    "image": "img.product-image"
+}
+
+for article in fetcher.fetch(target_url, css_selectors):
+    print(f"Found: {article.title} - {article.price}")
+
+```
+
+---
+
+# 📝 CrawledArticle.py
+A simple data class to provide a structured representation of a scraped article.
+
+## 🛠️ Prerequisites
+- Python 3.7+ (`dataclasses` module)
+
+## ⚙️ Technical Details
+The `@dataclass` decorator automatically generates methods like `__init__` and `__repr__`.
+
+- **Attributes**:
+    - `title` (str): The title of the article.
+    - `brand` (str): The brand or manufacturer.
+    - `price` (str): The price of the article.
+    - `image` (str): The URL of the article's image.
+    - `url` (str): The direct URL to the article page.
+
+- **Methods**:
+    - **`to_dict()`**: Returns a dictionary representation of the article's data.
+
+## 🚀 Usage (Examples)
+Create an instance to store article data.
+
+```python
+from CrawledArticle import CrawledArticle
+
+# Create an instance
+article = CrawledArticle(
+    title="Example Laptop",
+    brand="TechBrand",
+    price="$999.99",
+    image="https://example.com/image.jpg",
+    url="https://example.com/product/123"
+)
+
+# Access data
+print(article.title)
+
+# Convert to dictionary
+article_dict = article.to_dict()
+print(article_dict)
+```

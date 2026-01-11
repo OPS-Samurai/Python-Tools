@@ -1,5 +1,8 @@
+# 🏗️ Python-Tools Architecture
+> This repository serves as a collection of various Python-based tools designed for different automation and utility purposes.
+## 📂 Sub-Repositories
 | Repository | Focus & Purpose | Status |
-|---|---|---|
-| Automation-Helpers | Python script for scanning Git repositories and generating a system profile (System-DNA) in YAML format, acting as a manifest of the development environment. | Operational |
-| Network-Scanner | Command-line utility for network diagnostics, functioning as a lightweight TCP port scanner to identify open ports on a given host. | Operational |
-| Web-Crawler | Python-based tool for targeted data extraction from websites, allowing interactive configuration to crawl, filter, and report article-like information in a live-updating HTML report. | Operational |
+| :--- | :--- | :--- |
+| [📁 Automation-Helpers](./Automation-Helpers/) | Contains scripts and tools for general automation tasks. | Active |
+| [📁 Network-Scanner](./Network-Scanner/) | Provides a network scanning utility for discovering devices and services. | Active |
+| [📁 Web-Crawler](./Web-Crawler/) | Includes tools for crawling websites and fetching article content. | Active |
